@@ -3,6 +3,10 @@ from Display import Display
 from time import sleep as pause
 from Banco import Banco
 from Leitor import Leitor
+from basic_functions import led_error
+from _thread import start_new_thread as secundario
+
+
 
 
 class Menu:
@@ -14,12 +18,20 @@ class Menu:
         self.dados: dict = dados
         self.opcoes = ["PIX", "VER SALDO", "CREDITO", "EMPRESTIMO"]
 
+
+    def contagem(self):
+        for c in range(10):
+            print(c)
+            pause(1)
+
     def menu_rolagem_um_botao(self, titulo="BANCO DO BRASA"):
         indice: int = 0
         total = len(self.opcoes)
         selecionado = False
 
         while not selecionado:
+            pause(0.5)
+            self.display.desligar_backlight()
             # Atualiza o Display
             self.display.limpar()
             self.display.escrever(titulo, "> " + self.opcoes[indice])
@@ -31,6 +43,9 @@ class Menu:
                 tecla = self.teclado.get_teclas()
 
                 if tecla:
+                    self.display.backlight(True)
+                    self.display.parar = 1
+                    pause(0.5)
                     if tecla == "A":  # equivalente ao btn_move
                         indice = (indice + 1) % total
                         pause(0.3)  # debounce
@@ -39,6 +54,9 @@ class Menu:
 
                     elif tecla == "B":  # equivalente ao btn_select
                         break
+                    else:
+                        return 999
+                    
 
             if confirmando:
                 selecionado = True
@@ -50,8 +68,10 @@ class Menu:
 
     def menu(self):
         escolha = self.menu_rolagem_um_botao()
-
-        if escolha == 0:
+        
+        if escolha == 999:
+            return
+        elif escolha == 0:
             self.display.escrever("Iniciando Pix", "Aguarde...", True)
 
             while True:
@@ -67,6 +87,7 @@ class Menu:
                             if tecla:
                                 if tecla == "*":
                                     self.display.escrever("Operação", "Cancelada...")
+                                    secundario(led_error, ())
                                     pause(1.5)
                                     return
                                 elif tecla == "D":
@@ -81,6 +102,7 @@ class Menu:
                         if tecla:
                             if tecla == "*":
                                 self.display.escrever("Operação", "Cancelada...")
+                                secundario(led_error, ())
                                 pause(1.5)
                                 return
                             elif tecla in ("B", "D"):
@@ -99,6 +121,7 @@ class Menu:
                             if tecla:
                                 if tecla == "*":
                                     self.display.escrever("Operação", "Cancelada...")
+                                    secundario(led_error, ())
                                     pause(1.5)
                                     return
                                 elif tecla == "D":
@@ -117,6 +140,7 @@ class Menu:
                             if tecla:
                                 if tecla == "*":
                                     self.display.escrever("Operação", "Cancelada...")
+                                    secundario(led_error, ())
                                     pause(1.5)
                                     return
                                 if tecla in ("B", "D"):

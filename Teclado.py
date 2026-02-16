@@ -6,8 +6,8 @@ from Cantor import Cantor
 class Teclado:
     def __init__(self, cantor: Cantor):
         self.cantor: Cantor = cantor
-        self.pinos_linhas = (13, 12, 11, 10)
-        self.pinos_colunas = (9, 8, 7, 6)
+        self.pinos_colunas = (13, 12, 11, 10)
+        self.pinos_linhas = (9, 8, 7, 6)
         self.init()
 
     def init(self):
