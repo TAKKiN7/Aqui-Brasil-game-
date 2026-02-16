@@ -1,0 +1,6 @@
+# Ignora tudo dentro de .idea
+.idea/*
+
+# EXCEÇÃO: não ignorar a pasta runConfigurations
+!.idea/runConfigurations/
+!.idea/runConfigurations/*
