@@ -74,3 +74,14 @@ class Banco:
         
         return chave_ofc
     
+    def resetar_game(self, valor):
+        jogadores = self.dados
+        for jogador, values in jogadores.items():
+            player = jogadores.get(jogador)
+            if jogador.upper() == "BANCO":
+                continue
+            player["saldo"] = 5000
+
+        self.db.commit()
+
+        self.display.escrever("Reiniciando", "o jogo...", True)

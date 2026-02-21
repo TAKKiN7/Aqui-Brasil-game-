@@ -16,7 +16,7 @@ class Menu:
         self.leitor: Leitor = leitor
         self.banco: Banco = banco
         self.dados: dict = dados
-        self.opcoes = ["PIX", "VER SALDO", "CREDITO", "EMPRESTIMO"]
+        self.opcoes = ["PIX", "VER SALDO", "REINICIAR", "CREDITO", "EMPRESTIMO",]
 
 
     def contagem(self):
@@ -160,5 +160,7 @@ class Menu:
 
         elif escolha == 1:
             self.banco.ver_saldo(self.dados)
-        elif escolha > 1:
+        elif escolha == 2:
+            self.banco.resetar_game()
+        elif escolha > 2:
             self.display.escrever("Disponivel", "Em breve...", True)
